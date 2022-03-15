@@ -170,8 +170,9 @@ string GetIAMToken(string OAuthToken){
 	int i2, i = data.IndexOf("\"iamToken\": \"");
 
 	if (i >= 0) {
-		i2 = data.IndexOf("\"",  i + 13); 
-		token = data.Substring(i + 13, i2 - (i + 13));
+		i += 13;
+		i2 = data.IndexOf("\"",  i); 
+		token = data[i..i2];
 	}else{
 	
 		throw("FailedToGetIAMToken", "Failed to get IAM token! Server response:\r\n\r\n" + data);
@@ -242,7 +243,7 @@ int GetHTTPStatusCode(string text){
 	int i = text.IndexOf(' ');
 	if(i > 0){
 		int i2 = text.IndexOf(' ', i + 1);
-		if(i > 0){return text.Substring(i + 1, i2 - (i + 1)).ToInt();}
+		if(i2 > 0){return text[i + 1..i2].ToInt();}
 	}
 }
 
